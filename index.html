@@ -8,29 +8,61 @@
   <title>LePendu - Enzo Avagliano</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
 </head>
-<body>
-  <header>
+<body onload="gameLoop();">
+  <header class="col-12">
     <h3 class="text-center">Jeu du pendu</h3>
   </header>
   <main>
     <div class="d-flex flex-direction-collumn">
-      <div class="left">
-        <h3 class="text-center">Mot à deviner :</h3>
-        <!-- <hr> -->
+      <div class="left col-8">
+
+        <div class="rules mb-5">
+          <h4>Utilisation :</h4>
+          <p>
+            Tapez directement sur votre clavier pour proposer une lettre.<br>
+          </p>
+
+          <h4>Infos de jeu :</h4>
+          <p id="playerInfos">Le jeu n'as pas débuté.</p>
+          <p id="winStrikeDOM">Victoires : 0</p>
+          <p id="loseStrikeDOM">Défaites : 0</p>
+        </div>
+
+        <div class="gameInfos mt-5">
+          <h3 class="text-center">Mot à deviner :</h3>
+          <div class="d-flex justify-content-center">
+            <div id="lettersToGessContainer" class="lettersToGessContainer text-center m-2">
+              <h1 id="wordLetters">_ _ _ _</h1>
+            </div>
+          </div>
+
+          <h3 class="text-center mt-5">Lettres déjà proposées :</h3>
+          <div class="d-flex justify-content-center">
+            <div id="lettersToGessContainer" class="lettersToGessContainer text-center m-2">
+              <h1 id="proposedLetters" class="text-wrap text-break">Ø</h1>
+            </div>
+          </div>
+          <div class="forButton d-flex justify-content-center">
+            <button id="resetButton" onclick="reset();" style="display:none;" type="button" class="btn btn-dark">Replay</button>
+          </div>
+        </div>
       </div>
-      <div class="right">
+      <div class="right col-4">
         <h3 class="text-center">Potence :</h3>
-        <!-- <hr> -->
+        <div id="potence" class="potence">
+          <img id="image" src="assets/img/potence0.png" alt="">
+        </div>
       </div>
     </div>
   </main>
-  <footer class="fixed-bottom">
+  <footer class="fixed-bottom col-12 mw-100">
     <p class="text-center">Made with ❤️ by Enzo Avagliano</p>
   </footer>
 </body>
 
 
 <!-- SCRIPT PENDU -->
+<script src="assets/js/config.js" charset="utf-8"></script>
 <script src="assets/js/main.js" charset="utf-8"></script>
 <!-- BOOTSTRAP JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
