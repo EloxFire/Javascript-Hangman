@@ -12,13 +12,13 @@
 *  Liste de mots
 *  Index mot séléctioné
 *  Tableau des underscores
+*  i = index pour l'image de la potence a afficher
+*  Nombre de vie restantes
 *  Tableau des lettres correctes
 *  Tableau des lettres incorrectes
 *  Tableau des lettres déjà proposées
-*  Nombre de vie restantes
 *  Nombre de victoires
 *  Nombre de défaites
-*  i = index pour l'image de la potence a afficher
 *  DOM de la potence
 *  DOM de l'image de la potence
 *  DOM du texte d'informations de jeu
@@ -26,19 +26,21 @@
 *  DOM des underscores
 *  DOM win
 *  DOM lose
+*  DOM Button de reset
+*  DOM Texte de reset
 */
 
 let randomNumber;
 let selectedWord;
 let key;
+let i;
+let lives;
 let underscores = [];
 let rightLetters = [];
 let wrongLetters = [];
 let proposedLetters = [];
-let lives;
 let winStrike = 0;
 let loseStrike = 0;
-let i;
 let potenceDOM = document.getElementById('potence');
 let imgDOM = document.getElementById('image');
 let gameTextDOM = document.getElementById('playerInfos');
@@ -47,6 +49,7 @@ let underscoreDOM = document.getElementById('wordLetters');
 let winStrikeDOM = document.getElementById('winStrikeDOM');
 let loseStrikeDOM = document.getElementById('loseStrikeDOM');
 let resetButtonDOM = document.getElementById('resetButton');
+let resetTextDOM = document.getElementById('resetText');
 
 
 /*
@@ -66,17 +69,43 @@ function makeUnderscores(){
   return underscores;
 }
 
+/*
+* Verification pour ne pas pouvoir proposer une lettre déjà proposée
+* (Oui je suis gentil quand meme)
+*/
+function checkIfLetterIsAlreadyProposed(){
+  if(proposedLetters.includes(key)){
+    console.log("Lettre dejà proposée !");
+    console.log(" ");
+    return;
+  }else {
+    checkIfLetterIsContained();
+    checkIfWordIsFound();
+  }
+}
+
+/*
+* Verification des lettres pour voir si elles corespondent à la proposition du
+* joueur
+*/
 function checkIfLetterIsContained(){
   if(selectedWord.includes(key) && lives > 0){
     proposedLetters.push(key);
     rightLetters.push(key);
-    underscores[selectedWord.indexOf(key)] = key;
 
+    // Gestion de plusieurs meme lettres
+    for (let l = 0; l < selectedWord.length; l++) {
+      if(selectedWord.charAt(l) == key){
+        underscores[l] = key;
+      }
+    }
+
+    // Update des elements HTML pour l'interface.
     underscoreDOM.innerHTML = underscores;
     proposedLettersDOM.innerHTML = proposedLetters;
     gameTextDOM.innerHTML = "Il vous reste " + lives + " vies."
   }else {
-    i++;
+    i++; // Etat de la potence.
     lives--;
     wrongLetters.push(key);
     proposedLetters.push(key);
@@ -85,27 +114,49 @@ function checkIfLetterIsContained(){
 
     // Gestion des images de la potence
     if(i < 6){
-      imgDOM.src = `assets/img/potence${i}.png`;
+      imgDOM.src = `assets/img/potence${i}.png`; // IMage de la potence en fonction de son état
     }else{
+      lives = 0;
+      loseStrike++;
       imgDOM.src = `assets/img/perdu.png`;
+
+      console.log("YOU LOSE");
+      console.log("FIN DU JEU !");
+      console.log(" ");
+
       resetButtonDOM.style.display = "block";
+      resetTextDOM.innerHTML = "Le mot à deviner était : " + selectedWord;
+      resetTextDOM.style.display = "block";
+      loseStrikeDOM.innerHTML = "Défaites : " + loseStrike;
+      return;
     }
   }
+
   console.log("Lettre proposée :", key);
+  console.log("Etat du mot :", underscores);
   console.log("Lettres déjà proposées :", proposedLetters);
   console.log("Lettres correctes :", rightLetters);
   console.log("Lettres incorrectes :", wrongLetters);
   console.log("Index potence :", i);
+  console.log("Victoires :", winStrike);
+  console.log("Défaites :", loseStrike);
   console.log(" ");
 }
 
+/*
+* Fonction de verification de si le mot est trouvé ou pas
+*/
 function checkIfWordIsFound(){
   if(underscores.join('') === selectedWord && lives > 0){
+    winStrike++;
     console.log("YOU WIN");
     console.log("Index potence :", i);
+    console.log("Victoires :", winStrike);
+    console.log("Défaites :", loseStrike);
     console.log(" ");
-    imgDOM.src = `assets/img/win.png`;
+    imgDOM.src = `assets/img/win${i}.png`;
     resetButtonDOM.style.display = "block";
+    winStrikeDOM.innerHTML = "Victoires : " + winStrike;
   }
 }
 
@@ -127,19 +178,22 @@ function gameLoop(){
   while(underscores.length > 0){
     underscores.pop();
   }
+  lives = 6;
+  i = 0;
+
   underscoreDOM.innerHTML = underscores;
   proposedLettersDOM.innerHTML = "Ø";
   resetButtonDOM.style.display = "none";
-  selectedWord = data.mots[Math.floor(Math.random() * (data.mots.length - 0) + 0)];
-  lives = 6;
-  i = 0;
+  gameTextDOM.innerHTML = "Il vous reste " + lives + " vies."
   imgDOM.src = `assets/img/potence${i}.png`;
+
+  selectedWord = data.mots[Math.floor(Math.random() * (data.mots.length - 0) + 0)];
   makeUnderscores();
+
   if(underscores.join('') !== selectedWord && lives > 0){
     document.addEventListener('keypress', function(e){
       key = String.fromCharCode(e.keyCode).toUpperCase();
-      checkIfLetterIsContained();
-      checkIfWordIsFound();
+      checkIfLetterIsAlreadyProposed();
     });
   }else {
     console.log("AÏE, ERREUR");
