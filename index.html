@@ -8,62 +8,37 @@
   <title>LePendu - Enzo Avagliano</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
 </head>
-<body onload="gameLoop();">
+<body onload="">
   <header class="col-12">
-    <h3 class="text-center">Jeu du pendu</h3>
+    <h3 class="text-center">Jeu du pendu - Menu principal</h3>
   </header>
-  <main>
-    <div class="d-flex flex-direction-collumn">
-      <div class="left col-8">
+  <main class="d-flex">
+    <div class="col-6">
+      <h3>Bienvenue !</h3>
+      <p>
+        <br>
+        Bienvenue sur ce jeu du pendu.<br>
+        Les règles du jeu sont simples, deux modes de jeu vous sont proposés :<br>
+        Joueur vs Ordinateur <br>
+        Ordinateur vs Joueur <br>
+        <br>
+        Dans le mode <strong>Joueur vs Ordinateur</strong>, un mot aléatoire est séléctionné par l'ordinateur et vous devez le deviner. ce mot peut contenir des lettres <strong>et/ou</strong> des chiffres
+        <br>
+        <br>
+        Dans le mode <strong>Ordinateur vs Joueur</strong>, c'est vous qui définissez le mot a trouver et l'ordinateur doit le deviner. Libre a vous de mettre des lettres <strong>et/ou</strong> des chiffres.
+      </p>
+    </div>
+    <div class="col-6">
+      <h3>Sélectionnez un mode :</h3>
 
-        <div class="rules mb-5">
-          <h4>Utilisation :</h4>
-          <p>
-            Tapez directement sur votre clavier pour proposer une lettre.<br>
-          </p>
-
-          <h4>Infos de jeu :</h4>
-          <p id="playerInfos">Le jeu n'as pas débuté.</p>
-          <p id="winStrikeDOM">Victoires : 0</p>
-          <p id="loseStrikeDOM">Défaites : 0</p>
-        </div>
-
-        <div class="gameInfos mt-5">
-          <h3 class="text-center">Mot à deviner :</h3>
-          <div class="d-flex justify-content-center">
-            <div id="lettersToGessContainer" class="lettersToGessContainer text-center m-2">
-              <h1 id="wordLetters">_ _ _ _</h1>
-            </div>
-          </div>
-
-          <h3 class="text-center mt-5">Lettres déjà proposées :</h3>
-          <div class="d-flex justify-content-center">
-            <div id="lettersToGessContainer" class="lettersToGessContainer text-center m-2">
-              <h1 id="proposedLetters" class="text-wrap text-break">Ø</h1>
-            </div>
-          </div>
-          <div class="forButton d-flex justify-content-center">
-            <button id="resetButton" onclick="reset();" style="display:none;" type="button" class="btn btn-dark">Replay</button>
-          </div>
-        </div>
-      </div>
-      <div class="right col-4">
-        <h3 class="text-center">Potence :</h3>
-        <div id="potence" class="potence">
-          <img id="image" src="assets/img/potence0.png" alt="">
-        </div>
-      </div>
+      <a href="playersearch.html" type="button" class="btn btn-lg btn-outline-dark">Joueur vs Ordinateur</a>
+      <a href="computersearch.html" type="button" class="btn btn-lg btn-outline-dark">Ordinateur vs Joueur</a>
     </div>
   </main>
   <footer class="fixed-bottom col-12 mw-100">
     <p class="text-center">Made with ❤️ by Enzo Avagliano</p>
   </footer>
 </body>
-
-
-<!-- SCRIPT PENDU -->
-<script src="assets/js/config.js" charset="utf-8"></script>
-<script src="assets/js/main.js" charset="utf-8"></script>
 <!-- BOOTSTRAP JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
