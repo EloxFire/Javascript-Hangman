@@ -11,7 +11,7 @@ header{
 }
 
 header h3{
-  font-size: 4em;
+  font-size: 3em;
 }
 
 footer{
@@ -21,18 +21,23 @@ footer{
 }
 .left{
   height: 80vh;
-  border-right: .2px solid #000;
+  border-right: .2px solid rgb(0, 0, 0, 0.25);
 }
 .right{
   height: 80vh;
-  border-left: .2px solid #000;
+  border-left: .2px solid rgb(0, 0, 0, 0.25);
 }
+
 
 .potence{
   width: 600px;
   height: 700px;
   /* background-size: cover;
   background: url("../img/potence0.png") no-repeat center fixed; */
+}
+
+.rules{
+  height: 40vh;
 }
 
 .lettersToGessContainer{

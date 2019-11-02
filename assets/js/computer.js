@@ -112,7 +112,7 @@ function checkIfLetterIsContained(){
     wrongLetters.push(key);
     proposedLetters.push(key);
     proposedLettersDOM.innerHTML = proposedLetters;
-    gameTextDOM.innerHTML = "Il vous reste " + lives + " vies."
+    gameTextDOM.innerHTML = "L'ordinateur possède " + lives + " vies."
 
     // Gestion des images de la potence
     if(i < 6){
@@ -134,7 +134,7 @@ function checkIfLetterIsContained(){
     }
   }
 
-  console.log("Lettre proposée :", key);
+  console.log("Lettre proposée par l'ordi :", key);
   console.log("Etat du mot :", underscores);
   console.log("Lettres déjà proposées :", proposedLetters);
   console.log("Lettres correctes :", rightLetters);
@@ -162,12 +162,18 @@ function checkIfWordIsFound(){
   }
 }
 
-function reset(){
-  gameLoop();
+function makeAGuess(){
+  key = listeMots.alphabet_ordi[Math.floor(Math.random() * (listeMots.alphabet_ordi.length - 0) + 0)];
 }
 
+function resetComputer(){
+  computerGameLoop();
+}
 
-function gameLoop(){
+/*
+* Loop du jeu adaptée pour l'ordinateur
+*/
+function computerGameLoop(){
   while(rightLetters.length > 0){
     rightLetters.pop();
   }
@@ -180,6 +186,7 @@ function gameLoop(){
   while(underscores.length > 0){
     underscores.pop();
   }
+
   lives = 6;
   i = 0;
 
@@ -189,14 +196,15 @@ function gameLoop(){
   gameTextDOM.innerHTML = "Il vous reste " + lives + " vies."
   imgDOM.src = `assets/img/potence${i}.png`;
 
-  selectedWord = listeMots.mots[Math.floor(Math.random() * (listeMots.mots.length - 0) + 0)];
+  selectedWord = wordInput.value;
   makeUnderscores();
 
   if(underscores.join('') !== selectedWord && lives > 0){
-    document.addEventListener('keypress', function(e){
-      key = String.fromCharCode(e.keyCode).toUpperCase();
+    setTimeout(function(){
+      console.log(" ");
+      makeAGuess();
       checkIfLetterIsAlreadyProposed();
-    });
+    }, 2000);
   }else {
     console.log("AÏE, ERREUR");
   }

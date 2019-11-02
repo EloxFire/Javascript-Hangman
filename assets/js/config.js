@@ -1,4 +1,4 @@
-const data = {
+const listeMots = {
   "alphabet_ordi": [
     "a",
     "b",
