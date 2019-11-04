@@ -1,6 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet"> -->
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="https://kit.fontawesome.com/f59aae8cd6.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,67 +10,59 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
 </head>
 <body onload="gameLoop();">
-  <header class="col-12">
-    <h3 class="text-center">Jeu du pendu - Game</h3>
-  </header>
+
   <main>
-    <div class="d-flex flex-direction-collumn">
-      <div class="left col-4">
+    <div class="header text-center">
+      <h1 class="">Joueur vs Ordinateur</h1>
+    </div>
+    <div class="d-flex flex-direction-column justify-content-center">
+      <div class="stats">
+        <h1 class="h1">Règles</h1>
+        <hr>
+        <p style="font-size: 1.2em;">
+          Dans ce mode de jeu, c'est <strong>l'ordinateur</strong> qui choisi le mot a deviner et c'est <strong>vous</strong> qui devez le trouver.<br>
+          Le mot peut contenir des <strong>chiffres et des lettres</strong>.<br><br>
+          <small>Ouvrez la console developpeur pour voir les rouages du jeu (Attention, spoil du mot à deviner)</small>
+        </p>
 
-        <div class="rules mb-5">
-          <h4>Utilisation :</h4>
-          <p>
-            Dans ce mode de jeu, c'est <strong>l'ordinateur qui propose</strong> le mot a deviner et c'est <strong>vous qui devez le trouver</strong> !<br>
-            Le mot proposé peut contenir des lettres et des chiffres.<br><br>
-            Taper directement sur votre clavier pour proposer une lettre.<br><br>
-            <small>Ouvrez la console dévelopeur pour voir les rouages du jeu ! (Attention, spoil du mot).</small><br>
-          </p>
+        <hr class="little-hr">
 
-          <hr>
-          <div class="text-center">
-            <h4>Infos de jeu :</h4>
-            <p id="playerInfos">Le jeu n'as pas débuté.</p>
-            <p id="winStrikeDOM">Victoires : 0</p>
-            <p id="loseStrikeDOM">Défaites : 0</p>
-          </div>
+        <div class="mt-5 mb-5 align-items-center justify-content-center">
+          <h3>Statistiques :</h3>
+          <p id="playerLives" style="font-size:1.2em;">Vies restantes : Ø</p>
+          <p id="winStrikeDOM" style="font-size:1.2em;">Victoires : Ø</p>
+          <p id="loseStrikeDOM" style="font-size:1.2em;">Défaites : Ø</p>
         </div>
+        <hr class="little-hr">
+
+        <div class="mt-5 mb-5 align-items-center justify-content-center">
+          <h3>Infos :</h3>
+          <p id="underscoresLetters" style="font-size:1.2em;">Mot à deviner : _ _ _ _</p>
+          <p id="proposedLetters" style="font-size:1.2em;">Lettres déjà proposées : Ø</p>
+        </div>
+        <hr class="little-hr">
+
+        <div class="mt-5 mb-5 align-items-center justify-content-center">
+          <p style="display:none;" id="wordSpoiler" style="font-size:1.2em;">Le mot à deviner était :</p>
+          <button style="display:none;" id="resetButton" onclick="reset();" class="btn btn-light" href="playersearch.html">Replay</button>
+          <hr class="little-hr">
+        </div>
+
       </div>
 
-      <div class="col-4">
-        <div class="gameInfos mt-5">
-          <h3 class="text-center">Mot à deviner :</h3>
-          <div class="d-flex justify-content-center">
-            <div id="lettersToGessContainer" class="lettersToGessContainer text-center m-2">
-              <h1 id="wordLetters">_ _ _ _</h1>
-            </div>
-          </div>
 
-          <h3 class="text-center mt-5">Lettres déjà proposées :</h3>
-          <div class="d-flex justify-content-center">
-            <div id="lettersToGessContainer" class="lettersToGessContainer text-center m-2">
-              <h1 id="proposedLetters" class="text-wrap text-break">Ø</h1>
-            </div>
-          </div>
-          <div class="forButton d-flex justify-content-center align-items-center">
-            <div class="resetContainer mt-2">
-              <button id="resetButton" onclick="reset();" style="display:none;" type="button" class="btn btn-dark">Replay</button>
-              <p id="resetText" style="display:none;">Le mot a deviner était : </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="hangman">
+        <h1>Potence</h1>
+        <hr>
 
-      <div class="right col-4">
-        <h3 class="text-center">Potence :</h3>
-        <div id="potence" class="potence">
-          <img id="image" src="assets/img/potence0.png" alt="">
+        <div id="potenceDiv" class="">
+          <img class="ml-5" id="potenceIMG" src="assets/img/potence0.png" alt="">
+
         </div>
       </div>
     </div>
   </main>
-  <footer class="fixed-bottom col-12 mw-100">
-    <p class="text-center">Made with ❤️ by Enzo Avagliano</p>
-  </footer>
+
 </body>
 
 

@@ -42,16 +42,17 @@ let wrongLetters = [];
 let proposedLetters = [];
 let winStrike = 0;
 let loseStrike = 0;
-let potenceDOM = document.getElementById('potence');
-let imgDOM = document.getElementById('image');
-let gameTextDOM = document.getElementById('playerInfos');
+let potenceDOM = document.getElementById('potenceDiv');
+let imgDOM = document.getElementById('potenceIMG');
+let playerLivesDOM = document.getElementById('playerLives');
 let proposedLettersDOM = document.getElementById('proposedLetters');
-let underscoreDOM = document.getElementById('wordLetters');
+let underscoreDOM = document.getElementById('underscoresLetters');
 let winStrikeDOM = document.getElementById('winStrikeDOM');
 let loseStrikeDOM = document.getElementById('loseStrikeDOM');
 let resetButtonDOM = document.getElementById('resetButton');
-let resetTextDOM = document.getElementById('resetText');
+let wordSpoiler = document.getElementById('wordSpoiler');
 let wordInput = document.getElementById('wordInput');
+let again = setTimeout(loop, 2000);
 
 
 /*
@@ -104,15 +105,15 @@ function checkIfLetterIsContained(){
 
     // Update des elements HTML pour l'interface.
     underscoreDOM.innerHTML = underscores;
-    proposedLettersDOM.innerHTML = proposedLetters;
-    gameTextDOM.innerHTML = "Il vous reste " + lives + " vies."
+    proposedLettersDOM.innerHTML = "Lettres déjà proposées : " + proposedLetters;
+    playerLivesDOM.innerHTML = "Il vous reste " + lives + " vies."
   }else {
     i++; // Etat de la potence.
     lives--;
     wrongLetters.push(key);
     proposedLetters.push(key);
-    proposedLettersDOM.innerHTML = proposedLetters;
-    gameTextDOM.innerHTML = "L'ordinateur possède " + lives + " vies."
+    proposedLettersDOM.innerHTML = "Lettres déjà proposées : " + proposedLetters;
+    playerLivesDOM.innerHTML = "L'ordinateur possède " + lives + " vies."
 
     // Gestion des images de la potence
     if(i < 6){
@@ -121,14 +122,15 @@ function checkIfLetterIsContained(){
       lives = 0;
       loseStrike++;
       imgDOM.src = `assets/img/perdu.png`;
+      clearTimeout(temp);
 
       console.log("YOU LOSE");
       console.log("FIN DU JEU !");
       console.log(" ");
 
       resetButtonDOM.style.display = "block";
-      resetTextDOM.innerHTML = "Le mot à deviner était : " + selectedWord;
-      resetTextDOM.style.display = "block";
+      wordSpoiler.innerHTML = "Le mot à deviner était : " + selectedWord;
+      wordSpoiler.style.display = "block";
       loseStrikeDOM.innerHTML = "Défaites : " + loseStrike;
       return;
     }
@@ -190,22 +192,24 @@ function computerGameLoop(){
   lives = 6;
   i = 0;
 
-  underscoreDOM.innerHTML = underscores;
-  proposedLettersDOM.innerHTML = "Ø";
+  underscoreDOM.innerHTML = "Mot à deviner : " + underscores;
+  proposedLettersDOM.innerHTML = "Lettres déjà proposées : Ø";
   resetButtonDOM.style.display = "none";
-  gameTextDOM.innerHTML = "Il vous reste " + lives + " vies."
+  wordSpoiler.style.display = "none";
+  playerLivesDOM.innerHTML = "Il vous reste " + lives + " vies."
   imgDOM.src = `assets/img/potence${i}.png`;
 
   selectedWord = wordInput.value;
   makeUnderscores();
 
   if(underscores.join('') !== selectedWord && lives > 0){
-    setTimeout(function(){
-      console.log(" ");
-      makeAGuess();
-      checkIfLetterIsAlreadyProposed();
-    }, 2000);
+    loop();
   }else {
     console.log("AÏE, ERREUR");
   }
+}
+
+function loop(){
+  makeAGuess();
+  checkIfLetterIsAlreadyProposed();
 }
